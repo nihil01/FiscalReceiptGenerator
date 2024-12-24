@@ -73,7 +73,8 @@ public class ZReport implements Common{
                     new byte[]{0x0A},
                     "******************************************".getBytes(),
                     new byte[]{0x0A},
-                    generateZPeriodicHeader(),
+                    generateZPeriodicHeader(response.getData().getShiftOpenAtUtc(), response.getData().getShiftCloseAtUtc()),
+                    new byte[]{0x0A},
 
                     new byte[]{0x1B, 0x61, 0x01},
                     "Kassa cekleri:".getBytes(),
@@ -255,6 +256,8 @@ public class ZReport implements Common{
                     ("Hesabatin alinma vaxti: " + response.getData().getCreatedAtUtc()).getBytes(),
                     new byte[]{0x0A},
                     "******************************************".getBytes(),
+                    new byte[]{0x0A},
+                    generateZPeriodicHeader(response.getData().getShiftOpenAtUtc(), response.getData().getShiftCloseAtUtc()),
                     new byte[]{0x0A},
 
                     new byte[]{0x1B, 0x61, 0x01},
@@ -462,7 +465,8 @@ public class ZReport implements Common{
                     new byte[]{0x0A},
                     "******************************************".getBytes(),
                     new byte[]{0x0A},
-                    generateZPeriodicHeader(),
+                    generateZPeriodicHeader(responseLastDoc.getShiftOpenAtUtc(), responseLastDoc.getShiftCloseAtUtc()),
+                    new byte[]{0x0A},
 
                     new byte[]{0x1B, 0x61, 0x01},
                     "Kassa cekleri:".getBytes(),
@@ -644,6 +648,8 @@ public class ZReport implements Common{
                     ("Hesabatin alinma vaxti: " + responseLastDoc.getCreatedAtUtc()).getBytes(),
                     new byte[]{0x0A},
                     "******************************************".getBytes(),
+                    new byte[]{0x0A},
+                    generateZPeriodicHeader(responseLastDoc.getShiftOpenAtUtc(), responseLastDoc.getShiftCloseAtUtc()),
                     new byte[]{0x0A},
 
                     new byte[]{0x1B, 0x61, 0x01},
@@ -835,7 +841,7 @@ public class ZReport implements Common{
             return;
         }
 
-        CloseShiftCurrencies closeShiftCurrencies = responseLastDoc.getCurrencies().getFirst();
+        CloseShiftCurrencies closeShiftCurrencies = dataList.getFirst();
 
         List<CloseShiftVAT> correctionVAT = closeShiftCurrencies.getCorrectionCloseShiftVATs();
         List<CloseShiftVAT> salesVAT = closeShiftCurrencies.getSaleVatAmounts();
@@ -880,11 +886,11 @@ public class ZReport implements Common{
         }
     }
 
-    public byte[] generateZPeriodicHeader(){
+    public byte[] generateZPeriodicHeader(String shiftOpen, String shiftClose) {
         if (this.type == Type.PERIODIC_Z){
             return concat(new byte[][]{
-                    "Hesabat dovru: %s - %s".formatted(responseLastDoc.getShiftOpenAtUtc(),
-                            responseLastDoc.getShiftCloseAtUtc()).getBytes(),
+                    "Hesabat dovru: %s - %s".formatted(shiftOpen,
+                            shiftClose).getBytes(),
                     new byte[]{0x0A},
                     "******************************************".getBytes()
             });
@@ -901,7 +907,7 @@ public class ZReport implements Common{
                     ReceiptActions.generateFiscalQRCode(fiscalID);
                     return;
                 }
-                ReceiptActions.generateFiscalQRCode(responseLastDoc.getDocument_id());
+                ReceiptActions.generateFiscalQRCode(response.getData().getDocumentId());
             }
         } catch (PrintException e) {
             System.err.println("UNABLE TO PRINT Z REPORT RECEIPT");

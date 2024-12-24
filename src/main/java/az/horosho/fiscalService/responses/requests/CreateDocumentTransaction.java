@@ -68,6 +68,43 @@ public class CreateDocumentTransaction {
         private List<VatAmount> vatAmounts;
         private String firstOperationAtUtc;
         private String lastOperationAtUtc;
+        private List<String> parents;
+        private int paymentNumber;
+        private double residue;
+
+        public int getPaymentNumber() {
+            return paymentNumber;
+        }
+
+        public void setPaymentNumber(int paymentNumber) {
+            this.paymentNumber = paymentNumber;
+        }
+
+        public double getResidue() {
+            return residue;
+        }
+
+        public void setResidue(double residue) {
+            this.residue = residue;
+        }
+
+        public String getCreditContract() {
+            return creditContract;
+        }
+
+        public void setCreditContract(String creditContract) {
+            this.creditContract = creditContract;
+        }
+
+        private String creditContract;
+
+        public List<String> getParents() {
+            return parents;
+        }
+
+        public void setParents(List<String> parents) {
+            this.parents = parents;
+        }
 
         public String getFirstOperationAtUtc() {
             return firstOperationAtUtc;
@@ -196,6 +233,32 @@ public class CreateDocumentTransaction {
 
         public void setVatAmounts(List<VatAmount> vatAmounts) {
             this.vatAmounts = vatAmounts;
+        }
+
+        @Override
+        public String toString() {
+            return "Data{" +
+                    "moneyBackType=" + moneyBackType +
+                    ", parentDocument='" + parentDocument + '\'' +
+                    ", cashier='" + cashier + '\'' +
+                    ", currency='" + currency + '\'' +
+                    ", rrn='" + rrn + '\'' +
+                    ", bonusCardNumber='" + bonusCardNumber + '\'' +
+                    ", items=" + items +
+                    ", sum=" + sum +
+                    ", cashSum=" + cashSum +
+                    ", cashlessSum=" + cashlessSum +
+                    ", prepaymentSum=" + prepaymentSum +
+                    ", creditSum=" + creditSum +
+                    ", bonusSum=" + bonusSum +
+                    ", incomingSum=" + incomingSum +
+                    ", changeSum=" + changeSum +
+                    ", vatAmounts=" + vatAmounts +
+                    ", firstOperationAtUtc='" + firstOperationAtUtc + '\'' +
+                    ", lastOperationAtUtc='" + lastOperationAtUtc + '\'' +
+                    ", parents=" + parents +
+                    ", creditContract='" + creditContract + '\'' +
+                    '}';
         }
     }
 

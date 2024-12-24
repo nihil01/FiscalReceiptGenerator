@@ -1,7 +1,5 @@
 package az.horosho.fiscalService.ReceiptSamples;
 
-import az.horosho.ConfigAttributes;
-import az.horosho.PrinterHelperMethods;
 import az.horosho.PrinterService;
 import az.horosho.fiscalService.ReceiptActions;
 import az.horosho.fiscalService.responses.*;
@@ -112,6 +110,11 @@ public class RollBack_MoneyBack implements Common{
 
                 String.format("Odenildi pul almadan(bonus karti):      %.2f", requestDocument.getParameters().getData().getBonusSum()).getBytes(StandardCharsets.UTF_8),
                 new byte[]{0x0A},
+                String.format("Avans (beh):   %.2f", requestDocument.getParameters().getData().getPrepaymentSum()).getBytes(StandardCharsets.UTF_8),
+                new byte[]{0x0A},
+
+                String.format("Nisye:   %.2f", requestDocument.getParameters().getData().getCreditSum()).getBytes(StandardCharsets.UTF_8),
+                new byte[]{0x0A},
 
                 "******************************************".getBytes(StandardCharsets.UTF_8),
                 new byte[]{0x0A},
@@ -192,6 +195,11 @@ public class RollBack_MoneyBack implements Common{
                 new byte[]{0x0A},
 
                 String.format("Odenildi pul almadan(bonus karti):      %.2f", requestLastDocument.getBonusSum()).getBytes(StandardCharsets.UTF_8),
+                new byte[]{0x0A},
+                String.format("Avans (beh):   %.2f", requestLastDocument.getPrepaymentSum()).getBytes(StandardCharsets.UTF_8),
+                new byte[]{0x0A},
+
+                String.format("Nisye:   %.2f", requestLastDocument.getCreditSum()).getBytes(StandardCharsets.UTF_8),
                 new byte[]{0x0A},
 
                 "******************************************".getBytes(StandardCharsets.UTF_8),

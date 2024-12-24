@@ -6,7 +6,6 @@ import java.awt.*;
 import az.horosho.UI.SwingCustomUtilities;
 
 import static az.horosho.UI.HelperMethods.createComponentMap;
-
 public class Main extends SwingCustomUtilities{
 
     public static void main(String[] args) {

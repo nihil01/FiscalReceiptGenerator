@@ -15,7 +15,7 @@ import java.util.Objects;
 public class PrinterHelperMethods implements FileInterfaces{
 //    private boolean finalStatus;
     public final String CONFIG_PATH =
-            "C:\\Users\\orkhan.narbayov\\Desktop\\printer\\FiscalPrinter\\src\\main\\resources\\config.cfg";
+            "C:\\Program Files\\FiscalReceiptGenerator\\config.cfg";
 
     @Override
     public PrintService getPrintService(){
@@ -57,6 +57,7 @@ public class PrinterHelperMethods implements FileInterfaces{
     }
 
     public String getDataFromConfig(String configPath, ConfigAttributes cfg){
+        System.out.println(configPath);
         ArrayList<String> confData = readFile(configPath);
         if (confData.isEmpty()) return null;
         return confData.stream()
@@ -69,41 +70,4 @@ public class PrinterHelperMethods implements FileInterfaces{
                 .findFirst()
                 .orElse(null);
     }
-
-//    public boolean checkPrinterStatus(){
-//        PrintService printer = getPrintService();
-//
-//        if (printer == null) return false;
-//        PrintServiceAttributeSet printServiceAttributeSet = printer.getAttributes();
-//
-//        PrinterState state = (PrinterState) printServiceAttributeSet.get(PrinterState.class);
-//        PrinterStateReasons stateReasons = (PrinterStateReasons) printServiceAttributeSet.get(PrinterStateReasons.class);
-//
-//        if (state == null) {
-//            System.out.println("Printer state is unavailable.");
-//            return true;
-//        }
-//
-//        // Печатаем состояние для отладки
-//        System.out.println("Printer State: " + state);
-//        if (stateReasons != null) {
-//            System.out.println("Printer State Reasons: " + stateReasons);
-//        }
-//
-//        if (state == PrinterState.IDLE || state == PrinterState.PROCESSING) {
-//            if (stateReasons != null && !stateReasons.isEmpty()) {
-//                System.out.println("Printer has warnings: " + stateReasons);
-//            }
-//            return true;
-//        }
-//
-//        System.out.println("Printer is not ready.");
-//        if (stateReasons != null) {
-//            for (PrinterStateReason reason : stateReasons.keySet()) {
-//                System.out.println("Problem: " + reason + " - " + stateReasons.get(reason));
-//            }
-//        }
-//
-//        return false;
-//    }
 }

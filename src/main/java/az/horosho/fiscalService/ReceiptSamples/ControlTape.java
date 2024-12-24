@@ -111,6 +111,11 @@ public class ControlTape implements Common{
             case "deposit" -> "Medaxil";
             case "withdraw" -> "Mexaric";
             case "correction" -> "Korreksiya";
+            case "prepay" -> "Avans odenisi";
+            case "creditpay" -> "Nisye odenisi";
+            case "zreport" -> "Z Hesabati";
+            case "money_back" -> "Geri qaytarma";
+            case "rollback" -> "Legv";
             default -> operationName;
         };
     }

@@ -319,7 +319,18 @@ public class SwingCustomUtilities {
                                     System.out.println("TRANSACTION TYPE " + saleTransaction.getParameters().getDocType());
                                     switch (saleTransaction.getParameters().getDocType()) {
                                         case "sale": {
-                                            TrivialSale trivialSale = new TrivialSale(saleTransaction, data);
+                                            TrivialSale trivialSale = new TrivialSale(saleTransaction, data, null);
+                                            trivialSale.generate();
+                                            break;
+                                        }
+                                        case "prepay":{
+                                            TrivialSale trivialSale = new TrivialSale(saleTransaction, data, TrivialSale.Type.PREPAYMENT);
+                                            trivialSale.generate();
+                                            break;
+                                        }
+
+                                        case "creditpay": {
+                                            TrivialSale trivialSale = new TrivialSale(saleTransaction, data, TrivialSale.Type.CREDIT_PAY);
                                             trivialSale.generate();
                                             break;
                                         }
@@ -476,7 +487,13 @@ public class SwingCustomUtilities {
                                             correction.generate();
                                             break;
                                         case "sale":
-                                            new TrivialSale(lastDoc, docFiscalID);
+                                            new TrivialSale(lastDoc, docFiscalID, null);
+                                            break;
+                                        case "creditpay":
+                                            new TrivialSale(lastDoc, docFiscalID, TrivialSale.Type.CREDIT_PAY);
+                                            break;
+                                        case "prepay":
+                                            new TrivialSale(lastDoc, docFiscalID, TrivialSale.Type.PREPAYMENT);
                                             break;
                                         case "money_back":
                                             RollBack_MoneyBack moneyBack = new RollBack_MoneyBack(RollBack_MoneyBack.Type.MoneyBack,lastDoc,

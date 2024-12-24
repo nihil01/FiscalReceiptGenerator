@@ -8,6 +8,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.print.PrintException;
 
+import az.horosho.ConfigAttributes;
+import az.horosho.PrinterHelperMethods;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
@@ -17,7 +19,9 @@ import az.horosho.PrinterService;
 
 
 public class ReceiptActions {
-    private final static String QR_DEFAULT_PATH = "C:\\Users\\orkhan.narbayov\\Desktop\\printer\\FiscalPrinter\\src\\main\\resources\\qr.png";
+    private final static String QR_DEFAULT_PATH = new PrinterHelperMethods().
+            getDataFromConfig(new PrinterHelperMethods().CONFIG_PATH, ConfigAttributes.QR_DEFAULT_PATH);
+    
         public static void generateFiscalQRCode(String fiscalID){
 
             try {
@@ -27,20 +31,10 @@ public class ReceiptActions {
                     int width = bmp.getWidth();
                     int height = bmp.getHeight();
                     System.out.println(width + "x" + height);
-                 
-                    BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-    
-                    for (int x = 0; x < width; x++) {
-                        for (int y = 0; y < height; y++) {
-                            if (bmp.get(x, y)) {
-                                image.setRGB(x, y, Color.BLACK.getRGB());  // Black for QR code
-                            } else {
-                                image.setRGB(x, y, Color.WHITE.getRGB());  // White background
-                            }
-                        }
-                    }
 
-                    
+                final BufferedImage image = getBufferedImage(width, height, bmp);
+
+
                 try{
                     File fileToSaveData = new File(QR_DEFAULT_PATH);
                     if(fileToSaveData.exists()){
@@ -62,5 +56,20 @@ public class ReceiptActions {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+    private static BufferedImage getBufferedImage(int width, int height, BitMatrix bmp) {
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if (bmp.get(x, y)) {
+                    image.setRGB(x, y, Color.BLACK.getRGB());  // Black for QR code
+                } else {
+                    image.setRGB(x, y, Color.WHITE.getRGB());  // White background
+                }
+            }
+        }
+        return image;
     }
 }

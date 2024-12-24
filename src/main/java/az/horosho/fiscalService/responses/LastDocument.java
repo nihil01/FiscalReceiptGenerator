@@ -32,6 +32,42 @@ public class LastDocument {
     private int docCountToSend;
     private List<CloseShiftCurrencies> currencies;
     private String document_id;
+    private List<String> parents;
+    private String creditContract;
+    private int paymentNumber;
+    private double residue;
+
+    public int getPaymentNumber() {
+        return paymentNumber;
+    }
+
+    public void setPaymentNumber(int paymentNumber) {
+        this.paymentNumber = paymentNumber;
+    }
+
+    public double getResidue() {
+        return residue;
+    }
+
+    public void setResidue(double residue) {
+        this.residue = residue;
+    }
+
+    public String getCreditContract() {
+        return creditContract;
+    }
+
+    public void setCreditContract(String creditContract) {
+        this.creditContract = creditContract;
+    }
+
+    public List<String> getParents() {
+        return parents;
+    }
+
+    public void setParents(List<String> parents) {
+        this.parents = parents;
+    }
 
     public int getReportsQuantity() {
         return reportsQuantity;
